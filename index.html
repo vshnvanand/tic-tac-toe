@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+    <style>
+        table { margin: auto; border-collapse: collapse; }
+        td {
+            width: 60px; height: 60px;
+            text-align: center; font-size: 30px;
+            border: 1px solid #333;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .winner {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .reset {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Tic Tac Toe</h2>
+    <table>
+        {% for row in range(3) %}
+        <tr>
+            {% for col in range(3) %}
+            <td>
+                {% set cell = row * 3 + col %}
+                {% if board[cell] == " " and winner is none %}
+                    <a href="{{ url_for('move', cell=cell) }}">_</a>
+                {% else %}
+                    {{ board[cell] }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if winner %}
+        <div class="winner">
+            {% if winner == "Draw" %}
+                It's a Draw!
+            {% else %}
+                {{ winner }} Wins!
+            {% endif %}
+        </div>
+        <div class="reset"><a href="{{ url_for('reset') }}">Play Again</a></div>
+    {% endif %}
+</body>
+</html>
